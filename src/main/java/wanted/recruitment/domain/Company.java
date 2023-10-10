@@ -10,6 +10,6 @@ import javax.persistence.*;
 public class Company {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "company_id")
-    private long companyId;
+    private long id;
     private String companyName;
 }
