@@ -44,11 +44,12 @@ public class RecruitmentController {
         Recruitment getRecruitment = recruitmentService.findRecruitment(recruitmentId).orElse(null);
         RecruitmentDto dto = new RecruitmentDto();
         if (getRecruitment != null) {
-            return modelMapper.map(getRecruitment, RecruitmentDto.class);
+            dto = modelMapper.map(getRecruitment, RecruitmentDto.class);
         }
+        //다른 채용 공고
+        dto.setRecruitmentList(recruitmentService.findRecruitmentIdList(getRecruitment));
         return dto;
     }
-
 
     @DeleteMapping("/{recruitmentId}")
     public String delete(@PathVariable Long recruitmentId) {

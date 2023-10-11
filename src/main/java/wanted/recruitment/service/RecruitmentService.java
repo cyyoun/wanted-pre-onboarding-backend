@@ -44,5 +44,12 @@ public class RecruitmentService {
         return Optional.ofNullable(getRecruitment);
     }
 
+    public List<Long> findRecruitmentIdList(Recruitment recruitment) {
+        List<Long> recruitmentIdList = recruitmentRepository.recruitmentIdList(recruitment.getCompany().getId());
+        recruitmentIdList.remove(recruitment.getId());
+        return recruitmentIdList;
+
+    }
+
 }
 
