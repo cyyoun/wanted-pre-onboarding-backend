@@ -12,4 +12,8 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> 
     @Query("SELECT r.id FROM Recruitment r WHERE r.company.id = :companyId")
     List<Long> recruitmentIdList(@Param("companyId") Long companyId);
 
+    @Query("SELECT r FROM Recruitment r WHERE r.content like %:keyword% OR " +
+                "r.position like %:keyword% OR r.skill like %:keyword%")
+    List<Recruitment> recruitmentByKeyword(@Param("keyword") String keyword);
+
 }

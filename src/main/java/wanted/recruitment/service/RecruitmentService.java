@@ -48,8 +48,11 @@ public class RecruitmentService {
         List<Long> recruitmentIdList = recruitmentRepository.recruitmentIdList(recruitment.getCompany().getId());
         recruitmentIdList.remove(recruitment.getId());
         return recruitmentIdList;
-
     }
 
+    public List<Recruitment> searchRecruitment(String keyword) {
+        System.out.println(recruitmentRepository.recruitmentByKeyword(keyword).toString());
+        return recruitmentRepository.recruitmentByKeyword(keyword);
+    }
 }
 

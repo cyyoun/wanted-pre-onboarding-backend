@@ -63,4 +63,12 @@ public class RecruitmentController {
         return modelMapper.map(getRecruitment, RecruitmentDto.class);
     }
 
+    @GetMapping
+    public List<RecruitmentDto> search(@RequestParam("search") String search) {
+        List<Recruitment> recruitments = recruitmentService.searchRecruitment(search);
+        return recruitments.stream()
+                .map(recruitment -> modelMapper.map(recruitment, RecruitmentDto.class))
+                .collect(Collectors.toList());
+    }
+
 }
