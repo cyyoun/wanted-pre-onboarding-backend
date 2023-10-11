@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wanted.recruitment.domain.Recruitment;
-import wanted.recruitment.repository.CompanyRepository;
 import wanted.recruitment.repository.RecruitmentRepository;
 
 import java.util.List;
@@ -33,5 +32,17 @@ public class RecruitmentService {
     public void delRecruitment(Long id) {
         recruitmentRepository.deleteById(id);
     }
+
+    public Optional<Recruitment> editRecruitment(Recruitment recruitment, Long id) {
+        Recruitment getRecruitment = findRecruitment(id).orElse(null);
+        if (getRecruitment != null) {
+            getRecruitment.setContent(recruitment.getContent());
+            getRecruitment.setPosition(recruitment.getPosition());
+            getRecruitment.setCompensation(recruitment.getCompensation());
+            getRecruitment.setSkill(recruitment.getSkill());
+        }
+        return Optional.ofNullable(getRecruitment);
+    }
+
 }
 

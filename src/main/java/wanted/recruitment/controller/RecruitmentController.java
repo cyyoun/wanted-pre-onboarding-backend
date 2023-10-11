@@ -1,7 +1,6 @@
 package wanted.recruitment.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import wanted.recruitment.domain.Recruitment;
@@ -40,8 +39,8 @@ public class RecruitmentController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping
-    public RecruitmentDto detail(@RequestParam("item") Long recruitmentId) {
+    @GetMapping("/{recruitmentId}")
+    public RecruitmentDto detail(@PathVariable Long recruitmentId) {
         Recruitment getRecruitment = recruitmentService.findRecruitment(recruitmentId).orElse(null);
         RecruitmentDto dto = new RecruitmentDto();
         if (getRecruitment != null) {
@@ -53,10 +52,14 @@ public class RecruitmentController {
 
     @DeleteMapping("/{recruitmentId}")
     public String delete(@PathVariable Long recruitmentId) {
-        System.out.println("recruitmentId = " + recruitmentId);
         recruitmentService.delRecruitment(recruitmentId);
         return "공고가 삭제되었습니다. 🙂";
+    }
 
+    @PatchMapping("/{recruitmentId}")
+    public RecruitmentDto edit(@PathVariable long recruitmentId, @RequestBody Recruitment recruitment) {
+        Recruitment getRecruitment = recruitmentService.editRecruitment(recruitment, recruitmentId).orElse(null);
+        return modelMapper.map(getRecruitment, RecruitmentDto.class);
     }
 
 }

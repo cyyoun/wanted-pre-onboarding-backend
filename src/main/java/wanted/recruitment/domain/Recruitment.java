@@ -28,4 +28,19 @@ public class Recruitment {
     @JoinColumn(name = "company_id", nullable = false) // 외래키 null 허용 안함
     private Company company;
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setCompensation(String compensation) {
+        this.compensation = compensation;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
+    }
 }
