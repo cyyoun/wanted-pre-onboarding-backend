@@ -30,4 +30,8 @@ public class RecruitmentService {
         return recruitmentRepository.findAll();
     }
 
+    public void delRecruitment(Long id) {
+        recruitmentRepository.deleteById(id);
+    }
 }
+

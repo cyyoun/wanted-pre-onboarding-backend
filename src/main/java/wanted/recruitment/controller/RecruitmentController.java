@@ -26,7 +26,7 @@ public class RecruitmentController {
         Recruitment getRecruitment = recruitmentService.findRecruitment(recruitment.getId()).orElse(null);
         RecruitmentDto dto = new RecruitmentDto();
         if (getRecruitment != null) {
-           return modelMapper.map(recruitment, RecruitmentDto.class);
+           return modelMapper.map(getRecruitment, RecruitmentDto.class);
         }
         return dto;
     }
@@ -39,4 +39,24 @@ public class RecruitmentController {
                 .map(recruitment -> modelMapper.map(recruitment, RecruitmentListDto.class))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping
+    public RecruitmentDto detail(@RequestParam("item") Long recruitmentId) {
+        Recruitment getRecruitment = recruitmentService.findRecruitment(recruitmentId).orElse(null);
+        RecruitmentDto dto = new RecruitmentDto();
+        if (getRecruitment != null) {
+            return modelMapper.map(getRecruitment, RecruitmentDto.class);
+        }
+        return dto;
+    }
+
+
+    @DeleteMapping("/{recruitmentId}")
+    public String delete(@PathVariable Long recruitmentId) {
+        System.out.println("recruitmentId = " + recruitmentId);
+        recruitmentService.delRecruitment(recruitmentId);
+        return "공고가 삭제되었습니다. 🙂";
+
+    }
+
 }
