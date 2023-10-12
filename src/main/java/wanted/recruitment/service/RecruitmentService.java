@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wanted.recruitment.domain.Recruitment;
 import wanted.recruitment.repository.RecruitmentRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +21,8 @@ public class RecruitmentService {
         recruitmentRepository.save(recruitment);
     }
 
-    public Optional<Recruitment> findRecruitment(Long id) {
-        Optional<Recruitment> recruitment = recruitmentRepository.findById(id);
-        return recruitmentRepository.findById(id);
+    public Recruitment findRecruitment(Long id) {
+        return recruitmentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Recruitment not found"));
     }
 
     public List<Recruitment> findRecruitmentList() {
@@ -33,15 +33,14 @@ public class RecruitmentService {
         recruitmentRepository.deleteById(id);
     }
 
-    public Optional<Recruitment> editRecruitment(Recruitment recruitment, Long id) {
-        Recruitment getRecruitment = findRecruitment(id).orElse(null);
-        if (getRecruitment != null) {
-            getRecruitment.setContent(recruitment.getContent());
-            getRecruitment.setPosition(recruitment.getPosition());
-            getRecruitment.setCompensation(recruitment.getCompensation());
-            getRecruitment.setSkill(recruitment.getSkill());
-        }
-        return Optional.ofNullable(getRecruitment);
+    public Recruitment editRecruitment(Recruitment recruitment, Long id) {
+        Recruitment getRecruitment = findRecruitment(id);
+        getRecruitment.setContent(recruitment.getContent());
+        getRecruitment.setPosition(recruitment.getPosition());
+        getRecruitment.setCompensation(recruitment.getCompensation());
+        getRecruitment.setSkill(recruitment.getSkill());
+
+        return getRecruitment;
     }
 
     public List<Long> findRecruitmentIdList(Recruitment recruitment) {
@@ -51,8 +50,8 @@ public class RecruitmentService {
     }
 
     public List<Recruitment> searchRecruitment(String keyword) {
-        System.out.println(recruitmentRepository.recruitmentByKeyword(keyword).toString());
         return recruitmentRepository.recruitmentByKeyword(keyword);
     }
+
 }
 

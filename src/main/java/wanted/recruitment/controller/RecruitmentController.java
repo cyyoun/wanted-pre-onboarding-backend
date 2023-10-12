@@ -22,7 +22,7 @@ public class RecruitmentController {
     @PostMapping("/add")
     public RecruitmentDto add(@RequestBody Recruitment recruitment) {
         recruitmentService.save(recruitment);
-        Recruitment getRecruitment = recruitmentService.findRecruitment(recruitment.getId()).orElse(null);
+        Recruitment getRecruitment = recruitmentService.findRecruitment(recruitment.getId());
         RecruitmentDto dto = new RecruitmentDto();
         if (getRecruitment != null) {
            return modelMapper.map(getRecruitment, RecruitmentDto.class);
@@ -41,7 +41,7 @@ public class RecruitmentController {
 
     @GetMapping("/{recruitmentId}")
     public RecruitmentDto detail(@PathVariable Long recruitmentId) {
-        Recruitment getRecruitment = recruitmentService.findRecruitment(recruitmentId).orElse(null);
+        Recruitment getRecruitment = recruitmentService.findRecruitment(recruitmentId);
         RecruitmentDto dto = new RecruitmentDto();
         if (getRecruitment != null) {
             dto = modelMapper.map(getRecruitment, RecruitmentDto.class);
@@ -59,7 +59,7 @@ public class RecruitmentController {
 
     @PatchMapping("/{recruitmentId}")
     public RecruitmentDto edit(@PathVariable long recruitmentId, @RequestBody Recruitment recruitment) {
-        Recruitment getRecruitment = recruitmentService.editRecruitment(recruitment, recruitmentId).orElse(null);
+        Recruitment getRecruitment = recruitmentService.editRecruitment(recruitment, recruitmentId);
         return modelMapper.map(getRecruitment, RecruitmentDto.class);
     }
 
