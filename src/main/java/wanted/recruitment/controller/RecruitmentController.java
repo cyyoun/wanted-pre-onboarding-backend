@@ -23,11 +23,7 @@ public class RecruitmentController {
     public RecruitmentDto add(@RequestBody Recruitment recruitment) {
         recruitmentService.save(recruitment);
         Recruitment getRecruitment = recruitmentService.findRecruitment(recruitment.getId());
-        RecruitmentDto dto = new RecruitmentDto();
-        if (getRecruitment != null) {
-           return modelMapper.map(getRecruitment, RecruitmentDto.class);
-        }
-        return dto;
+        return modelMapper.map(getRecruitment, RecruitmentDto.class);
     }
 
     @GetMapping("/list")
@@ -42,10 +38,8 @@ public class RecruitmentController {
     @GetMapping("/{recruitmentId}")
     public RecruitmentDto detail(@PathVariable Long recruitmentId) {
         Recruitment getRecruitment = recruitmentService.findRecruitment(recruitmentId);
-        RecruitmentDto dto = new RecruitmentDto();
-        if (getRecruitment != null) {
-            dto = modelMapper.map(getRecruitment, RecruitmentDto.class);
-        }
+        RecruitmentDto dto = modelMapper.map(getRecruitment, RecruitmentDto.class);
+
         //다른 채용 공고
         dto.setRecruitmentList(recruitmentService.findRecruitmentIdList(getRecruitment));
         return dto;
