@@ -2,6 +2,7 @@ package wanted.recruitment.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "recruitment_tbl")
 public class Recruitment {
 
@@ -24,7 +26,7 @@ public class Recruitment {
     @OneToMany(mappedBy = "recruitment", cascade = CascadeType.REMOVE) // 연쇄 삭제 적용
     private List<Application> applications = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id", nullable = false) // 외래키 null 허용 안함
     private Company company;
 

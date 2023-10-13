@@ -8,7 +8,6 @@ import wanted.recruitment.repository.RecruitmentRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
